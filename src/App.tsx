@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import { MiniDrawer } from './components/drawer';
 import MultipleSelectChip from './components/select';
 import { OutlinedInput } from "@mui/material";
-import { filterOptions } from "./components/filters";
-import { setFilters } from './store/searchJobSlice';
+import { filterOptions } from "./utils/filters";
+import { setFilters } from './store/search-job-slice';
 import { useAppDispatch, useAppSelector } from "./store/store";
 import "./App.css";
 

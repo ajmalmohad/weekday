@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Job {
+export interface Job {
   jdUid: string;
   jdLink: string;
   jobDetailsFromCompany: string;

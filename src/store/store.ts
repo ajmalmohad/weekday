@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import searchJobReducer from './searchJobSlice'
+import searchJobReducer from './search-job-slice'
 import { useDispatch, useSelector } from 'react-redux'
 
 export const store = configureStore({
