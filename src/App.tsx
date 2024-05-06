@@ -1,11 +1,13 @@
-import './App.css'
+import Box from '@mui/material/Box';
+import { MiniDrawer } from './components/drawer';
 
-function App() {
+export default function App() {
   return (
-    <>
-      Hi
-    </>
-  )
+    <Box sx={{ display: 'flex' }}>
+      <MiniDrawer />
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        
+      </Box>
+    </Box>
+  );
 }
-
-export default App

@@ -1,0 +1,35 @@
+.drawer-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.drawer-header .icon {
+  position: absolute;
+  right: -10px;
+  cursor: pointer;
+}
+
+.drawer .MuiDrawer-paper {
+  width: auto;
+  transition: width 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
+.drawer.open .MuiDrawer-paper {
+  width: 240px;
+}
+
+.drawer.closed .MuiDrawer-paper {
+  width: calc(56px + 1px);
+}
+
+@media (min-width: 600px) {
+  .drawer.closed .MuiDrawer-paper {
+    width: calc(64px + 1px);
+  }
+}
