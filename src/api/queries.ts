@@ -1,4 +1,18 @@
-export async function getAvailableJobs(limit: number, offset: number) {
+import { Job } from "../store/search-job-slice";
+import { jobParser } from "../utils/parser";
+
+type JobResult = {
+  data: {
+    jobs: Job[];
+    total: number;
+  };
+  error: null;
+} | {
+  data: null;
+  error: Error;
+};
+
+export async function getAvailableJobs(limit: number, offset: number): Promise<JobResult> {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
 
@@ -22,8 +36,19 @@ export async function getAvailableJobs(limit: number, offset: number) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    return { data, error: null };
+
+    if (!data || !data.jdList || !data.totalCount) {
+      throw new Error("Invalid response from server");
+    }
+
+    return {
+      data: {
+        jobs: jobParser(data.jdList as unknown[]),
+        total: data.totalCount as number,
+      },
+      error: null,
+    };
   } catch (error) {
-    return { data: null, error };
+    return { data: null, error: error as Error };
   }
 }
