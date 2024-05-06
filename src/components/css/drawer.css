@@ -28,6 +28,20 @@
   width: calc(56px + 1px);
 }
 
+.drawer .profile {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.drawer .profile > p {
+  margin-left: 10px;
+  font-weight: bold;
+  color: black;
+}
+
 @media (min-width: 600px) {
   .drawer.closed .MuiDrawer-paper {
     width: calc(64px + 1px);

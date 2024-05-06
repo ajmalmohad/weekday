@@ -41,7 +41,7 @@ const DrawerItem = ({ item, open }: {
             >
                 {item.icon}
             </ListItemIcon>
-            <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0, color: '#444444' }} />
         </ListItemButton>
     </ListItem>
 );
@@ -91,6 +91,10 @@ export const MiniDrawer = () => {
                 {drawerItemsExtra.map((item) => (
                     <DrawerItem item={item} open={open} />
                 ))}
+            </List>
+            <List className="profile">
+                <img src="src/assets/weekday.png" height={40} width={40} alt="weekday" />
+                <p style={{opacity: open ? 1 : 0}}>Muhammed Ajmal</p>
             </List>
         </MuiDrawer>
     )
