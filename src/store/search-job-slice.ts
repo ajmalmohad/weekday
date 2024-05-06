@@ -15,7 +15,7 @@ export interface Job {
   logoUrl: string;
 }
 
-interface JobFilters {
+export interface JobFilters {
   jobRole: string[];
   minExp: number | null;
   remote: string[];
@@ -26,17 +26,18 @@ interface JobFilters {
 
 interface Pagination {
   offset: number;
-  limit: number;
   total: number;
 }
 
 export interface SearchJobState {
+  loading: boolean;
   jobs: Job[];
   filters: JobFilters;
   pagination: Pagination;
 }
 
 const initialState: SearchJobState = {
+  loading: false,
   jobs: [],
   filters: {
     jobRole: [],
@@ -48,7 +49,6 @@ const initialState: SearchJobState = {
   },
   pagination: {
     offset: 0,
-    limit: 10,
     total: 0,
   },
 };
@@ -57,9 +57,6 @@ export const searchJobSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    setOpenJobs: (state, action: PayloadAction<Job[]>) => {
-      state.jobs = action.payload;
-    },
     addOpenJobs: (state, action: PayloadAction<Job[]>) => {
       state.jobs = [...state.jobs, ...action.payload];
     },
@@ -69,22 +66,25 @@ export const searchJobSlice = createSlice({
     setTotal: (state, action: PayloadAction<number>) => {
       state.pagination.total = action.payload;
     },
-    setOffset: (state, action: PayloadAction<number>) => {
-      state.pagination.offset = action.payload;
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     },
-    setLimit: (state, action: PayloadAction<number>) => {
-      state.pagination.limit = action.payload;
+    incrementOffset: (state, action: PayloadAction<number>) => {
+      // Only increment offset if it's less than total because we'll try to 
+      // fetch 10 items from the offset value
+      if (state.pagination.offset + action.payload < state.pagination.total) {
+        state.pagination.offset = state.pagination.offset + action.payload;
+      }
     },
   },
 });
 
 export const {
-  setOpenJobs,
   addOpenJobs,
   setFilters,
   setTotal,
-  setOffset,
-  setLimit,
+  incrementOffset,
+  setLoading,
 } = searchJobSlice.actions;
 
 export default searchJobSlice.reducer;

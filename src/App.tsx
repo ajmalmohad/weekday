@@ -3,17 +3,47 @@ import Box from "@mui/material/Box";
 import { MiniDrawer } from './components/drawer';
 import MultipleSelectChip from './components/select';
 import { OutlinedInput } from "@mui/material";
-import { filterOptions } from "./utils/filters";
-import { setFilters } from './store/search-job-slice';
+import { applyFilters, filterOptions } from "./utils/filters";
+import { Job, addOpenJobs, setFilters, setLoading, incrementOffset } from './store/search-job-slice';
 import { useAppDispatch, useAppSelector } from "./store/store";
+import { useEffect, useState } from "react";
+import { getAvailableJobs } from "./api/queries";
+import JobLists from "./components/joblists";
 import "./App.css";
 
 export default function App() {
   const dispatch = useAppDispatch();
   const filters = useAppSelector((state) => state.searchJob.filters);
+  const jobs = useAppSelector((state) => state.searchJob.jobs);
+  const loading = useAppSelector((state) => state.searchJob.loading);
+
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+
+  const fetchMoreJobs = (offset: number) => {
+    dispatch(setLoading(true));
+    getAvailableJobs(10, offset).then((result) => {
+      if (!result.error) {
+        dispatch(addOpenJobs(result.data.jobs));
+        dispatch(incrementOffset(10));
+      }
+    }).finally(() => {
+      dispatch(setLoading(false));
+    });
+  }
+
+  useEffect(() => {
+    fetchMoreJobs(0);
+  }, []);
+
+  // Apply filters whenever filters or jobs change
+  useEffect(() => {
+    const newFilteredJobs = applyFilters(jobs, filters);
+    setFilteredJobs(newFilteredJobs);
+  }, [filters, jobs]);
 
   // Higher order function for doing simple partial application
   const onSelectionChange = (optionName: string) => (selectedItems: string[]) => {
+    selectedItems = selectedItems.map((item) => item.trim().toLowerCase());
     switch (optionName) {
       case "Roles":
         dispatch(setFilters({ jobRole: selectedItems }));
@@ -35,8 +65,6 @@ export default function App() {
         break;
     }
   }
-
-  console.log(filters);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -64,6 +92,7 @@ export default function App() {
             sx={{ height: 39, margin: 1, width: 180 }}
           />
         </div>
+        <JobLists jobs={filteredJobs} loading={loading} />
       </Box>
     </Box>
   );
