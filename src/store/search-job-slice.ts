@@ -70,11 +70,7 @@ export const searchJobSlice = createSlice({
       state.loading = action.payload;
     },
     incrementOffset: (state, action: PayloadAction<number>) => {
-      // Only increment offset if it's less than total because we'll try to 
-      // fetch 10 items from the offset value
-      if (state.pagination.offset + action.payload < state.pagination.total) {
-        state.pagination.offset = state.pagination.offset + action.payload;
-      }
+      state.pagination.offset = state.pagination.offset + action.payload;
     },
   },
 });

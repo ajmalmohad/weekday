@@ -16,23 +16,27 @@ export default function App() {
   const filters = useAppSelector((state) => state.searchJob.filters);
   const jobs = useAppSelector((state) => state.searchJob.jobs);
   const loading = useAppSelector((state) => state.searchJob.loading);
+  const offset = useAppSelector((state) => state.searchJob.pagination.offset);
+  const total = useAppSelector((state) => state.searchJob.pagination.total);
 
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
 
-  const fetchMoreJobs = (offset: number) => {
+  const fetchMoreJobs = () => {
     dispatch(setLoading(true));
-    getAvailableJobs(10, offset).then((result) => {
-      if (!result.error) {
-        dispatch(addOpenJobs(result.data.jobs));
-        dispatch(incrementOffset(10));
-      }
-    }).finally(() => {
-      dispatch(setLoading(false));
-    });
+    if (total == 0 || offset < total) {
+      getAvailableJobs(10, offset).then((result) => {
+        if (!result.error) {
+          dispatch(addOpenJobs(result.data.jobs));
+          dispatch(incrementOffset(10));
+        }
+      }).finally(() => {
+        dispatch(setLoading(false));
+      });
+    }
   }
 
   useEffect(() => {
-    fetchMoreJobs(0);
+    fetchMoreJobs();
   }, []);
 
   // Apply filters whenever filters or jobs change
@@ -92,7 +96,7 @@ export default function App() {
             sx={{ height: 39, margin: 1, width: 180 }}
           />
         </div>
-        <JobLists jobs={filteredJobs} loading={loading} />
+        <JobLists jobs={filteredJobs} loading={loading} fetchData={fetchMoreJobs} />
       </Box>
     </Box>
   );
