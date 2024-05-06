@@ -82,19 +82,19 @@ export const MiniDrawer = () => {
             </div>
             <Divider />
             <List>
-                {drawerItems.map((item) => (
-                    <DrawerItem item={item} open={open} />
+                {drawerItems.map((item, idx) => (
+                    <DrawerItem key={idx} item={item} open={open} />
                 ))}
             </List>
             <Divider />
             <List>
-                {drawerItemsExtra.map((item) => (
-                    <DrawerItem item={item} open={open} />
+                {drawerItemsExtra.map((item,idx) => (
+                    <DrawerItem key={idx} item={item} open={open} />
                 ))}
             </List>
             <List className="profile">
                 <img src="src/assets/weekday.png" height={40} width={40} alt="weekday" />
-                <p style={{opacity: open ? 1 : 0}}>Muhammed Ajmal</p>
+                <p style={{ opacity: open ? 1 : 0 }}>Muhammed Ajmal</p>
             </List>
         </MuiDrawer>
     )
