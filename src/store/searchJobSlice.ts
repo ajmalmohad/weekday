@@ -16,10 +16,11 @@ interface Job {
 }
 
 interface JobFilters {
-  jobRole: string | null;
-  numEmployees: number | null;
-  location: string | null;
   minExp: number | null;
+  companyName: string | null;
+  location: string | null;
+  remote: boolean | null;
+  jobRole: string | null;
   minJdSalary: number | null;
 }
 
@@ -38,10 +39,11 @@ interface SearchJobState {
 const initialState: SearchJobState = {
   jobs: [],
   filters: {
-    jobRole: null,
-    numEmployees: null,
-    location: null,
     minExp: null,
+    companyName: null,
+    location: null,
+    remote: null,
+    jobRole: null,
     minJdSalary: null,
   },
   pagination: {
@@ -76,6 +78,13 @@ export const searchJobSlice = createSlice({
   },
 });
 
-export const { setOpenJobs, addOpenJobs, setFilters, setTotal, setOffset, setLimit } = searchJobSlice.actions;
+export const {
+  setOpenJobs,
+  addOpenJobs,
+  setFilters,
+  setTotal,
+  setOffset,
+  setLimit,
+} = searchJobSlice.actions;
 
 export default searchJobSlice.reducer;
