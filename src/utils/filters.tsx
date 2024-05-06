@@ -1,3 +1,5 @@
+import { Job, JobFilters } from "../store/search-job-slice";
+
 interface FilterOption {
     name: string;
     options: string[];
@@ -34,3 +36,50 @@ export const filterOptions: FilterOption[] = [
         mode: "multiple"
     },
 ];
+
+export const applyRolesFilter = (jobs: Job[], roles: string[]): Job[] => {
+    if (!roles.length) return jobs;
+    return jobs.filter((job) => roles.includes(job.jobRole));;
+}
+
+export const applyExperienceFilter = (jobs: Job[], minExp: number | null): Job[] => {
+    if (!minExp) return jobs;
+    return jobs.filter((job) => job.minExp && job.minExp <= minExp);
+}
+
+export const applyRemoteFilter = (jobs: Job[], remote: string[]): Job[] => {
+    if (!remote.length) return jobs;
+    if (remote.includes("onsite") && remote.includes("remote")) {
+        return jobs;
+    } else if (remote.includes("onsite")) {
+        return jobs.filter((job) => job.location !== "remote");
+    } else {
+        return jobs.filter((job) => remote.includes(job.location));
+    }
+}
+
+export const applyMinJdSalaryFilter = (jobs: Job[], minJdSalary: number | null): Job[] => {
+    if (!minJdSalary) return jobs;
+    return jobs.filter((job) => job.minJdSalary && job.minJdSalary >= minJdSalary);
+}
+
+export const applyLocationFilter = (jobs: Job[], location: string[]): Job[] => {
+    if (!location.length) return jobs;
+    return jobs.filter((job) => location.includes(job.location));
+}
+
+export const applyCompanyNameFilter = (jobs: Job[], companyName: string | null): Job[] => {
+    if (!companyName) return jobs;
+    return jobs.filter((job) => job.companyName === companyName);
+}
+
+export const applyFilters = (jobs: Job[], filters: JobFilters): Job[] => {
+    let filteredJobs = jobs;
+    filteredJobs = applyRolesFilter(filteredJobs, filters.jobRole);
+    filteredJobs = applyExperienceFilter(filteredJobs, filters.minExp);
+    filteredJobs = applyRemoteFilter(filteredJobs, filters.remote);
+    filteredJobs = applyMinJdSalaryFilter(filteredJobs, filters.minJdSalary);
+    filteredJobs = applyLocationFilter(filteredJobs, filters.location);
+    filteredJobs = applyCompanyNameFilter(filteredJobs, filters.companyName);
+    return filteredJobs;
+}
