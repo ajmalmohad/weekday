@@ -16,12 +16,12 @@ interface Job {
 }
 
 interface JobFilters {
-  minExp: number | null;
-  companyName: string | null;
-  location: string | null;
-  remote: boolean | null;
   jobRole: string | null;
+  minExp: number | null;
+  remote: boolean | null;
   minJdSalary: number | null;
+  location: string | null;
+  companyName: string | null;
 }
 
 interface Pagination {
@@ -39,12 +39,12 @@ interface SearchJobState {
 const initialState: SearchJobState = {
   jobs: [],
   filters: {
-    minExp: null,
-    companyName: null,
-    location: null,
-    remote: null,
     jobRole: null,
+    minExp: null,
+    remote: null,
     minJdSalary: null,
+    location: null,
+    companyName: null,
   },
   pagination: {
     offset: 0,

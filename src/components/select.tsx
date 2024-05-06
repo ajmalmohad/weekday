@@ -11,8 +11,8 @@ interface MultipleSelectChipProps {
 }
 
 export default function MultipleSelectChip(
-  { options, mode, name, onSelectionChange }: 
-  MultipleSelectChipProps) {
+  { options, mode, name, onSelectionChange }:
+    MultipleSelectChipProps) {
   const [item, setItems] = React.useState<string[]>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof item>) => {
@@ -31,8 +31,13 @@ export default function MultipleSelectChip(
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 200 }}>
+    <FormControl sx={{ m: 1, minWidth: 180 }}>
       <Select
+        sx={{
+          '& .MuiSelect-select': {
+            padding: 1,
+          }
+        }}
         multiple={mode === 'multiple'}
         displayEmpty
         value={item}
@@ -43,6 +48,9 @@ export default function MultipleSelectChip(
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
                 <Chip
+                  sx={{
+                    height: 22,
+                  }}
                   key={value}
                   label={value}
                   clickable
