@@ -4,17 +4,39 @@ import { MiniDrawer } from './components/drawer';
 import MultipleSelectChip from './components/select';
 import { OutlinedInput } from "@mui/material";
 import { filterOptions } from "./components/filters";
+import { setFilters } from './store/searchJobSlice';
+import { useAppDispatch, useAppSelector } from "./store/store";
 import "./App.css";
 
 export default function App() {
+  const dispatch = useAppDispatch();
+  const filters = useAppSelector((state) => state.searchJob.filters);
+
   // Higher order function for doing simple partial application
   const onSelectionChange = (optionName: string) => (selectedItems: string[]) => {
-    console.log(`Option: ${optionName}, Selected Items: `, selectedItems);
+    switch (optionName) {
+      case "Roles":
+        dispatch(setFilters({ jobRole: selectedItems }));
+        break;
+      case "Experience":
+        dispatch(setFilters({ minExp: Number(selectedItems[0]) }));
+        break;
+      case "Remote":
+        dispatch(setFilters({ remote: selectedItems }));
+        break;
+      case "Min Base Salary":
+        dispatch(setFilters({ minJdSalary: Number(selectedItems[0]) }));
+        break;
+      case "Location":
+        dispatch(setFilters({ location: selectedItems }));
+        break;
+      case "Company Name":
+        dispatch(setFilters({ companyName: selectedItems[0] }));
+        break;
+    }
   }
 
-  const onCompanySearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-  }
+  console.log(filters);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -36,7 +58,9 @@ export default function App() {
           ))}
           <OutlinedInput
             placeholder="Company Name"
-            onChange={onCompanySearch}
+            onChange={(e) => {
+              onSelectionChange("Company Name")([e.target.value]);
+            }}
             sx={{ height: 39, margin: 1, width: 180 }}
           />
         </div>
