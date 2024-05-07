@@ -1,6 +1,7 @@
 import { Job } from "../store/search-job-slice";
 import { JobCard } from "./jobcard";
 import { useEffect, useRef } from "react";
+import Loading from '../assets/loading.gif';
 import './css/joblists.css'
 
 export default function JobLists({
@@ -38,7 +39,7 @@ export default function JobLists({
     if (loading) {
         return (
             <div className="loading">
-                <img src="src/assets/loading.gif" alt="loading" />
+                <img src={Loading} alt="loading" />
             </div>
         );
     }

@@ -18,6 +18,8 @@ import {
     Share,
     ThumbUpOutlined
 } from '@mui/icons-material';
+import WeekdayLogo from '../assets/weekday.png';
+import WeekdayLogoLong from '../assets/weekday-long.png';
 
 const DrawerItem = ({ item, open }: {
     item: { text: string, icon: JSX.Element },
@@ -73,8 +75,8 @@ export const MiniDrawer = () => {
             <div className='drawer-header'>
                 {
                     !open ?
-                        <img src="src/assets/weekday.png" height={40} width={40} alt="weekday" />
-                        : <img src="src/assets/weekday-long.png" height={30} alt="weekday" />
+                        <img src={WeekdayLogo} height={40} width={40} alt="weekday" />
+                        : <img src={WeekdayLogoLong} height={30} alt="weekday" />
                 }
                 <IconButton className='icon' onClick={handleDrawerToggle}>
                     {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -93,7 +95,7 @@ export const MiniDrawer = () => {
                 ))}
             </List>
             <List className="profile">
-                <img src="src/assets/weekday.png" height={40} width={40} alt="weekday" />
+                <img src={WeekdayLogo} height={40} width={40} alt="weekday" />
                 <p style={{ opacity: open ? 1 : 0 }}>Muhammed Ajmal</p>
             </List>
         </MuiDrawer>
