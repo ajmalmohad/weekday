@@ -1,0 +1,15 @@
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 800px;
+    height: 80vh;
+    overflow-y: auto;
+    background-color: white;
+    padding: 16px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+}
