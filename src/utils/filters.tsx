@@ -70,7 +70,7 @@ export const applyLocationFilter = (jobs: Job[], location: string[]): Job[] => {
 
 export const applyCompanyNameFilter = (jobs: Job[], companyName: string | null): Job[] => {
     if (!companyName) return jobs;
-    return jobs.filter((job) => job.companyName === companyName);
+    return jobs.filter((job) => job.companyName.toLowerCase().startsWith(companyName));
 }
 
 export const applyFilters = (jobs: Job[], filters: JobFilters): Job[] => {
