@@ -13,12 +13,7 @@ import "./App.css";
 
 export default function App() {
   const dispatch = useAppDispatch();
-  const filters = useAppSelector((state) => state.searchJob.filters);
-  const jobs = useAppSelector((state) => state.searchJob.jobs);
-  const loading = useAppSelector((state) => state.searchJob.loading);
-  const offset = useAppSelector((state) => state.searchJob.pagination.offset);
-  const total = useAppSelector((state) => state.searchJob.pagination.total);
-
+  const { filters, jobs, loading, pagination: { offset, total } } = useAppSelector((state) => state.searchJob);
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
 
   const fetchMoreJobs = () => {
@@ -35,14 +30,11 @@ export default function App() {
     }
   }
 
-  useEffect(() => {
-    fetchMoreJobs();
-  }, []);
+  useEffect(fetchMoreJobs, []);
 
   // Apply filters whenever filters or jobs change
   useEffect(() => {
-    const newFilteredJobs = applyFilters(jobs, filters);
-    setFilteredJobs(newFilteredJobs);
+    setFilteredJobs(applyFilters(jobs, filters));
   }, [filters, jobs]);
 
   // Higher order function for doing simple partial application
