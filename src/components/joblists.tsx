@@ -16,46 +16,49 @@ export default function JobLists({
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
-          const first = entries[0];
-          if (first.isIntersecting) {
-            fetchData();
-          }
+            const first = entries[0];
+            if (first.isIntersecting) {
+                console.log("Intersecting");
+                fetchData();
+            }
         }, {});
-      
+
         const currentRef = loadMoreRef.current;
         if (currentRef) {
-          observer.observe(currentRef);
+            observer.observe(currentRef);
         }
-      
+
         return () => {
-          if (currentRef) {
-            observer.unobserve(currentRef);
-          }
+            if (currentRef) {
+                observer.unobserve(currentRef);
+            }
         };
-      }, [fetchData, jobs]);
+    }, [fetchData]);
 
     if (loading) {
         return (
-            <div>
-                <h1>Loading...</h1>
+            <div className="loading">
+                <img src="src/assets/loading.gif" alt="loading" />
             </div>
         );
     }
 
     if (!jobs.length) {
         return (
-            <div>
-                <h1>No Jobs Found</h1>
+            <div className="no-jobs">
+                <p>No Jobs Found</p>
             </div>
         );
     }
 
     return (
         <div className="joblists">
-            {jobs.map((job, idx) => (
-                <JobCard job={job} key={idx} />
-            ))}
-            <div ref={loadMoreRef}></div>
+            <div className="list">
+                {jobs.map((job, idx) => (
+                    <JobCard job={job} key={idx} />
+                ))}
+            </div>
+            <div className="observer" ref={loadMoreRef}>Load More</div>
         </div>
     );
 }

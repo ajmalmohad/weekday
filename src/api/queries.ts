@@ -27,6 +27,8 @@ export async function getAvailableJobs(limit: number, offset: number): Promise<J
     body,
   };
 
+  console.log("Fetching: ", requestOptions);
+
   try {
     const response = await fetch(
       "https://api.weekday.technology/adhoc/getSampleJdJSON",

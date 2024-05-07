@@ -1,3 +1,26 @@
 .joblists {
-    overflow: auto;
+  overflow: auto;
+}
+
+.loading,
+.no-jobs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 20px;
+}
+
+.loading img {
+  width: 50px;
+  height: 50px;
+}
+
+.observer {
+  opacity: 0;
+}
+
+.joblists .list {
+    display: flex;
+    flex-wrap: wrap;
 }
