@@ -3,6 +3,7 @@ import { JobCard } from "./jobcard";
 import { useEffect, useRef } from "react";
 import Loading from '../assets/loading.gif';
 import './css/joblists.css'
+import { debounce } from "../utils/debounce";
 
 export default function JobLists({
     jobs,
@@ -15,12 +16,14 @@ export default function JobLists({
 }) {
     const loadMoreRef = useRef(null);
 
+    const debouncedFetchData = debounce(fetchData, 300);
+
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
             const first = entries[0];
             if (first.isIntersecting) {
                 console.log("Intersecting");
-                fetchData();
+                debouncedFetchData();
             }
         }, {});
 
@@ -34,7 +37,7 @@ export default function JobLists({
                 observer.unobserve(currentRef);
             }
         };
-    }, [fetchData]);
+    }, [debouncedFetchData]);
 
     if (loading) {
         return (
