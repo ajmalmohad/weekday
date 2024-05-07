@@ -1,0 +1,110 @@
+.job-card {
+  flex-basis: 32%;
+  flex-grow: 0;
+  max-width: 500px;
+  border: 1px solid #dfdfdf;
+  border-radius: 4px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+}
+
+.job-card:hover {
+  transform: translateY(-4px);
+}
+
+.job-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.job-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-right: 16px;
+  margin-bottom: 20px;
+}
+
+.job-card-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.job-card-title .company,
+.job-card-title .role {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.job-card-title .company {
+  font-weight: 700;
+  color: #686868;
+}
+
+.job-card-title .location {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.job-card-title .role,
+.job-card-title .location {
+  text-transform: capitalize;
+}
+
+.estimated-salary {
+  margin-bottom: 12px;
+}
+
+.estimated-salary h3 {
+  font-size: 14px;
+  color: #4c5969;
+}
+
+.about-company {
+  font-size: 18px;
+  color: #212121;
+  margin-bottom: 12px;
+}
+
+.job-card-body p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.job-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-card-experience {
+  font-size: 14px;
+  color: #888;
+}
+
+.job-card-view-more {
+  background-color: #2196f3;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 986px) {
+  .job-card {
+    flex-basis: 48%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .job-card {
+    flex-basis: 100%;
+  }
+}
