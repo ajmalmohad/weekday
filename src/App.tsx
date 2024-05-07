@@ -59,7 +59,12 @@ export default function App() {
         dispatch(setFilters({ remote: selectedItems }));
         break;
       case "Min Base Salary":
-        dispatch(setFilters({ minJdSalary: Number(selectedItems[0]) }));
+        if (!selectedItems.length) {
+          dispatch(setFilters({ minJdSalary: null }));
+          break;
+        } else {
+          dispatch(setFilters({ minJdSalary: Number(selectedItems[0].split(" ")[0]) }));
+        }
         break;
       case "Location":
         dispatch(setFilters({ location: selectedItems }));

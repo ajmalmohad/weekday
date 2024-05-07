@@ -32,7 +32,7 @@ export const filterOptions: FilterOption[] = [
     },
     {
         name: "Location",
-        options: ["India", "USA", "UK", "Canada", "Australia"],
+        options: ["Mumbai", "Delhi NCR", "Bangalore", "Hyderabad", "Chennai"],
         mode: "multiple"
     },
 ];
@@ -59,6 +59,7 @@ export const applyRemoteFilter = (jobs: Job[], remote: string[]): Job[] => {
 }
 
 export const applyMinJdSalaryFilter = (jobs: Job[], minJdSalary: number | null): Job[] => {
+    console.log(minJdSalary);
     if (!minJdSalary) return jobs;
     return jobs.filter((job) => job.minJdSalary && job.minJdSalary >= minJdSalary);
 }
